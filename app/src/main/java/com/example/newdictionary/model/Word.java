@@ -51,8 +51,7 @@ public class Word implements Comparable, Serializable {
     @Override
     public int compareTo(Object o) {
         Word word = (Word) o;
-        if ((word.getName().equals(this.mName)) && (word.getMean().equals(this.mMean)) ||
-                (word.getId().equals(this.mId))) {
+        if ((word.getName().equals(this.mName)) && (word.getMean().equals(this.mMean))) {
             return 0;
         } else {
             return 1;
