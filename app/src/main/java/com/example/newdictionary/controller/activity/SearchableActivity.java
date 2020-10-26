@@ -3,7 +3,6 @@ package com.example.newdictionary.controller.activity;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -50,6 +49,8 @@ public class SearchableActivity extends AppCompatActivity {
             if (mAdapter == null) {
                 mAdapter = new WordAdapter(searchResult, this);
                 setAdapter();
+            } else {
+                mAdapter.updateWords(doMySearch(query));
             }
         }
     }

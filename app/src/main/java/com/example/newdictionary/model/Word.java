@@ -1,8 +1,9 @@
 package com.example.newdictionary.model;
 
+import java.io.Serializable;
 import java.util.UUID;
 
-public class Word {
+public class Word implements Comparable, Serializable {
     private String mName;
     private String mMean;
     private UUID mId;
@@ -45,5 +46,16 @@ public class Word {
 
     public UUID getId() {
         return mId;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        Word word = (Word) o;
+        if ((word.getName().equals(this.mName)) && (word.getMean().equals(this.mMean)) ||
+                (word.getId().equals(this.mId))) {
+            return 0;
+        } else {
+            return 1;
+        }
     }
 }

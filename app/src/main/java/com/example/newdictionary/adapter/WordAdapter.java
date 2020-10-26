@@ -1,15 +1,18 @@
 package com.example.newdictionary.adapter;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.newdictionary.R;
+import com.example.newdictionary.diffutil.MyDiffUtilCallBack;
 import com.example.newdictionary.model.Word;
 
 import java.util.List;
@@ -45,8 +48,29 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.WordViewHolder
     }
 
     @Override
+    public void onBindViewHolder(@NonNull WordViewHolder holder, int position,
+                                 @NonNull List<Object> payloads) {
+        if (payloads.isEmpty())
+            super.onBindViewHolder(holder, position, payloads);
+        else {
+            Bundle bundle = (Bundle) payloads.get(0);
+            for (String key : bundle.keySet()) {
+                holder.bindWord((Word) bundle.getSerializable(MyDiffUtilCallBack.BUNDLE_WORD));
+            }
+        }
+    }
+
+    @Override
     public int getItemCount() {
         return mWords.size();
+    }
+
+    public void updateWords(List<Word> newWords) {
+        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(
+                new MyDiffUtilCallBack(mWords, newWords));
+        diffResult.dispatchUpdatesTo(this);
+        mWords.clear();
+        mWords.addAll(newWords);
     }
 
 
